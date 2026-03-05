@@ -1,19 +1,24 @@
-//your JS code here.
+// ===== YOUR CODE STARTS HERE =====
 
+// Make these GLOBAL so renderQuestions() can use them
 const questionsElement = document.getElementById("questions");
 const submitButton = document.getElementById("submit");
 const scoreElement = document.getElementById("score");
 
-// Load progress from sessionStorage
-let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || {};
+// Load saved progress (must exist BEFORE renderQuestions runs)
+let userAnswers = {};
+const savedProgress = sessionStorage.getItem("progress");
+if (savedProgress) {
+  userAnswers = JSON.parse(savedProgress);
+}
 
-// Load score from localStorage
+// Load saved score from localStorage
 const savedScore = localStorage.getItem("score");
 if (savedScore !== null) {
   scoreElement.textContent = "Your score is " + savedScore + " out of 5.";
 }
 
-// Listen for radio change
+// Save progress when selecting radio
 questionsElement.addEventListener("change", function (event) {
   if (event.target.type === "radio") {
     const index = event.target.name.split("-")[1];
@@ -34,6 +39,7 @@ submitButton.addEventListener("click", function () {
   }
 
   scoreElement.textContent = "Your score is " + score + " out of 5.";
-
   localStorage.setItem("score", score);
 });
+
+// ===== YOUR CODE ENDS HERE =====
