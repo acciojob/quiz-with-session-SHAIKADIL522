@@ -1,29 +1,29 @@
 //your JS code here.
 
 const questionsElement = document.getElementById("questions");
-const scoreElement = document.getElementById("score");
 const submitButton = document.getElementById("submit");
+const scoreElement = document.getElementById("score");
 
-// Load saved progress from sessionStorage
+// Load progress from sessionStorage
 let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || {};
 
-// Load saved score from localStorage
+// Load score from localStorage
 const savedScore = localStorage.getItem("score");
 if (savedScore !== null) {
   scoreElement.textContent = "Your score is " + savedScore + " out of 5.";
 }
 
-// Listen for answer selection (Event Delegation)
+// Listen for radio change
 questionsElement.addEventListener("change", function (event) {
   if (event.target.type === "radio") {
-    const questionIndex = event.target.name.split("-")[1];
-    userAnswers[questionIndex] = event.target.value;
+    const index = event.target.name.split("-")[1];
+    userAnswers[index] = event.target.value;
 
     sessionStorage.setItem("progress", JSON.stringify(userAnswers));
   }
 });
 
-// Handle Submit
+// Submit logic
 submitButton.addEventListener("click", function () {
   let score = 0;
 
